@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div{
+				width: 100px;
+				height: 100px;
+				background: #FF0000;
+				position: absolute;	
+				color: white;	
+				line-height: 100px;
+				text-align: center;
+				font-size: 80px;
+			}
+		</style>
+	</head>
+	<body>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<div>B</div>
+		<div>牛</div>
+		<script>
+			var odiv= document.getElementsByTagName("div");
+			function color(){//随机颜色
+				var r = parseInt(Math.random()*256);
+				var g = parseInt(Math.random()*256);
+				var b = parseInt(Math.random()*256);
+				return "rgb("+r+","+g+","+b+")";			
+			}
+			document.onmousemove=function(event){
+				var evt = event||window.event;
+				var nleft = evt.clientX;
+				var ntop = evt.clientY;
+				for(var i = 0 ;i<odiv.length-1;i++){
+//					console.log(i)
+					odiv[i].style.top = odiv[i+1].offsetTop+"px";					
+					odiv[i].style.left = odiv[i+1].offsetLeft+"px";
+					odiv[i].style.background = color();
+					document.body.style.background = color();
+				}
+				odiv[odiv.length-1].style.top = ntop +"px";
+				odiv[odiv.length-1].style.left = nleft +"px";
+				
+			}
+				
+			
+		</script>
+	</body>
+</html>

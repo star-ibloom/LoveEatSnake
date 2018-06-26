@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>点击按钮更换背景</title>
+		<link id="lik" rel="stylesheet" href="css/css1.css" />
+	</head>
+	<body>
+		<button data-href="css/css1.css">按钮1</button>
+		<button data-href="css/css2.css">按钮2</button>
+		<button data-href="css/css3.css">按钮3</button>
+		<script>
+			var btn = document.getElementsByTagName("button");
+			var hlik = document.getElementById("lik");
+			
+			for(var i = 0 ; i< btn.length;i++){
+				btn[i].onclick=function(){
+//					console.log(this)
+			// this 代指发生事件的元素;
+					hlik.href = this.getAttribute("data-href");
+				}
+			}
+		</script>
+	</body>
+</html>

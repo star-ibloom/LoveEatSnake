@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			*{margin: 0;padding: 0;}
+			#box{
+				width: 500px;
+				height: 500px;
+				border: #424242 solid 5px;
+				position: absolute;
+				margin:-250px 0 0 -250px;
+				left:50%;
+				top: 50%;
+				display: block;
+				overflow: hidden;
+			}
+			#gameover{
+				background:black;
+				width: 100%;
+				height: 100%;
+				line-height: 800px;
+				font-size: 100px;
+				text-align: center;
+				color: red;
+				display: none;
+			}
+			
+			#snake{
+				width: 20px;
+				height: 20px;
+				position: absolute;
+				border-radius: 100%;
+				top: 0;
+				left: 0;
+				background: red;
+				text-align: center;
+			}
+			.tail{
+			width: 20px;
+			height: 20px;
+			position: absolute;
+			left: 0;
+			top: 0;
+			border-radius: 100%;
+			background: rgba(100,185,100,1);
+		}
+			.egg{
+				display: block;
+				position: absolute;
+				left: 0;
+				top: 0;
+				width: 20px;
+				height: 20px;
+				background: #FF4400;
+				border-radius: 100%;
+			}
+			#nb{
+				width: 100%;
+				height: 100px;
+				text-align: center;
+				font-size: 80px;
+				line-height: 100px;
+				color: red;
+				background: yellow;
+				font-family: "微软雅黑";
+			}
+
+
+		</style>		
+	</head>
+	<body>
+		<div id="gameover">Game Over</div>
+		<div id="box">
+			<div id="snake"></div>
+			<div class="tail"></div>
+			<div class="tail"></div>
+			<div class="tail"></div>
+			<div class="tail"></div>
+			<div class="tail"></div>
+			
+
+		</div>
+		<div id="nb">贪吃蛇</div>
+		
+		<script>
+			var snakeX = 0;
+			var snakeY = 0;
+			var obox = document.getElementById("box");
+			var aspan = document.getElementsByTagName("span");
+			
+			var t = null; //游戏定时器;
+			var direction = "right"//方向; 
+			creategg()
+			t = setInterval(function(){
+				snakemove(direction);
+				elemove();
+//				console.log(snakeX,snakeY)
+			},100)
+			
+			function snakemove(turn){
+				
+				
+				var osnake = document.getElementById("snake");
+				var odiv = obox.getElementsByTagName("div");
+				var onb = document.getElementById("nb");
+				var str = odiv.length;
+				snake.innerText = str-6
+				if(str>=26){
+					onb.innerText = "你是真牛逼啊"
+				}
+				if(snakemove.moving == "left" && turn == "right"){
+					snakeX-=20;
+					direction = snakemove.moving;
+					return 0;
+				}
+				if(snakemove.moving == "right" && turn == "left"){
+					snakeX+=20
+					direction = snakemove.moving;
+					return 0;
+				}
+				if(snakemove.moving == "top" && turn == "bottom"){
+					snakeY-=20;
+					direction = snakemove.moving;
+					return 0;
+				}
+				if(snakemove.moving == "bottom" && turn == "top"){
+					snakeY+=20
+					direction = snakemove.moving;
+					return 0;
+				}
+				snakemove.moving = turn;
+				
+				
+				
+				if(snakeX < 0 || snakeX > (500 - 20) || snakeY < 0 || snakeY > (500 - 20) ){
+					clearInterval(t);
+					var ogo = document.getElementById("gameover");
+					ogo.style.display = "block";
+					onb.style.display ="none"
+//					aspan.remove();
+//					obox.style.display = "none"
+//					console.log(1)  
+					return 0;
+					
+				}
+//				var odiv = obox.getElementsByTagName("div");
+//				for(var i = 6 ;i< odiv.length-i ;i++){
+//					if(snakeX == odiv[i].offsetLeft || snakeY == odiv[i].offsetTop){
+//						clearInterval(t);
+////					console.log(1)  
+//					return 0;
+//					}
+//				}
+//				
+				
+				switch(direction){
+					case "top":snakeY = snakeY - 20; 
+					break;
+					case "bottom":snakeY = snakeY + 20; 
+					break;
+					case "left":snakeX = snakeX - 20; 
+					break;
+					case "right":snakeX = snakeX + 20; 
+					break;
+				}
+				
+		
+				
+				for(var i = 0 ; i< aspan.length ;i++){
+					if(aspan[i].offsetLeft == snakeX && aspan[i].offsetTop == snakeY){
+//						console.log(1)
+						aspan[i].remove();
+						var oDiv = document.createElement("div");
+						oDiv.className = "tail";
+						document.getElementById("box").appendChild(oDiv)
+						//说明已经找到目标;
+						creategg()
+						break;
+					}
+				}
+				var tail =document.getElementsByClassName("tail")
+				for(var  i in tail){
+					if(tail[i].offsetLeft==snakeX&&tail[i].offsetTop==snakeY){
+						clearInterval(t);
+						var ogo = document.getElementById("gameover");
+						ogo.style.display = "block";
+						onb.style.display ="none"
+						
+						return 0;
+					}
+				}
+				
+			}
+			function elemove(){
+				var snake = document.getElementById("snake");
+				
+				var odiv = obox.getElementsByTagName("div");
+				
+				for(var j = odiv.length-1;j>0;j--){
+//					console.log(j)
+					odiv[j].style.left = odiv[j-1].offsetLeft + "px";
+					odiv[j].style.top = odiv[j - 1].offsetTop + "px";
+					
+				}
+				
+				snake.style.left = snakeX +"px";
+				snake.style.top = snakeY +"px";
+				
+			}
+//			console.log(snake)
+			
+			document.onkeydown = function(event){
+			var evt = event || window.event;
+			var code = evt.keyCode || evt.which;
+
+//			 console.log(code);
+			switch (code) {
+				case 37:
+					direction = "left";
+//					console.log(1)
+					break;
+				case 38:
+					direction = "top";
+//					console.log(2)
+					break;
+					
+				case 39:
+					direction = "right";
+					break;
+				case 40:
+					direction = "bottom";
+					break;
+				default:
+					break;
+			}
+		}
+			function randomint(min,max){
+				return min + parseInt(Math.random()*(max-min+1));
+			}
+			
+			function creategg(){
+				
+				var ospan = document.createElement("span");				
+				ospan.className = "egg";
+				ospan.style.left = randomint(0,24) * 20 + "px";
+				ospan.style.top = randomint(0,24) * 20 + "px";
+				var tail =document.getElementsByClassName("tail");
+				var sxpx = snakeX+"px";
+				var sypx = snakeY +"px"
+				for(var  i in tail){
+					if((ospan.style.left==sxpx&&ospan.style.top==sypx)||
+					(ospan.style.left==tail[i].offsetLeft+"px"&&ospan.style.top==tail[i].offsetTop+"px")){
+						console.log("换蛋")
+						ospan.remove();						
+						creategg();
+						return 0;
+					}else{
+						console.log("第一个蛋")
+						obox.appendChild(ospan);
+					}
+				}
+//				obox.appendChild(ospan);
+				
+//				setTimeout(function(){
+//					ospan.remove();
+//				}, 3000)
+//				creategg()
+			}
+			
+			
+			
+		</script>
+	</body>
+</html>

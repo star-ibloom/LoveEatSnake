@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style>
+			div{
+				width: 100px;
+				height: 100px;
+				background: #FF0000;
+				position: absolute;
+				
+			}
+		</style>
+	</head>
+	<body>
+		<div id="div1"></div>
+		<script>
+			var odiv = document.getElementById("div1");
+			
+			document.onmousemove = function(event){
+				var evt = event||window.event;
+				var nleft = evt.clientX;
+				var ntop = evt.clientY;
+				odiv.style.left = nleft -50 +"px"
+				odiv.style.top = ntop -50  +"px"
+					
+				
+			}
+		</script>
+	</body>
+</html>
